@@ -1,0 +1,300 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   DESIGN SYSTEM — CSS VARIABLES
+   ============================================ */
+:root {
+  /* Color tokens */
+  --color-bg:          #f8f9fc;
+  --color-surface:     #ffffff;
+  --color-surface-2:   #f1f4f9;
+  --color-border:      #e2e8f0;
+  --color-border-2:    #cbd5e1;
+
+  --color-text-primary:   #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted:     #94a3b8;
+
+  --color-brand:       #1b22a6;
+  --color-brand-light: #3b56f5;
+  --color-brand-hover: #1520c4;
+
+  /* Status colors */
+  --color-approved:    #16a34a;
+  --color-approved-bg: #f0fdf4;
+  --color-pending:     #d97706;
+  --color-pending-bg:  #fffbeb;
+  --color-rejected:    #dc2626;
+  --color-rejected-bg: #fef2f2;
+  --color-checked-in:  #0284c7;
+  --color-checked-in-bg: #f0f9ff;
+  --color-checked-out: #7c3aed;
+  --color-checked-out-bg: #f5f3ff;
+  --color-pre-approved: #0891b2;
+  --color-pre-approved-bg: #ecfeff;
+  --color-expired:     #64748b;
+  --color-expired-bg:  #f8fafc;
+
+  --sidebar-width: 240px;
+  --sidebar-collapsed-width: 64px;
+  --topbar-height: 56px;
+}
+
+/* Dark mode */
+.dark {
+  --color-bg:          #0a0e1a;
+  --color-surface:     #111827;
+  --color-surface-2:   #1e293b;
+  --color-border:      #1e293b;
+  --color-border-2:    #334155;
+
+  --color-text-primary:   #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted:     #64748b;
+
+  --color-brand:       #3b56f5;
+  --color-brand-light: #607dff;
+  --color-brand-hover: #4a64ff;
+
+  --color-approved-bg: #052e16;
+  --color-pending-bg:  #1c1402;
+  --color-rejected-bg: #1f0707;
+  --color-checked-in-bg: #082f49;
+  --color-checked-out-bg: #2e1065;
+  --color-pre-approved-bg: #083344;
+  --color-expired-bg:  #0f172a;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-border-2); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
+
+/* Focus ring */
+*:focus-visible {
+  outline: 2px solid var(--color-brand-light);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   COMPONENT LAYER
+   ============================================ */
+@layer components {
+
+  /* --- BUTTONS --- */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-150 cursor-pointer select-none;
+    @apply focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply btn text-white;
+    background-color: var(--color-brand);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background-color: var(--color-brand-hover);
+  }
+  .btn-secondary {
+    @apply btn border;
+    background-color: var(--color-surface);
+    border-color: var(--color-border);
+    color: var(--color-text-primary);
+  }
+  .btn-secondary:hover:not(:disabled) {
+    background-color: var(--color-surface-2);
+  }
+  .btn-danger {
+    @apply btn text-white bg-red-600 hover:bg-red-700;
+  }
+  .btn-ghost {
+    @apply btn;
+    color: var(--color-text-secondary);
+  }
+  .btn-ghost:hover:not(:disabled) {
+    background-color: var(--color-surface-2);
+    color: var(--color-text-primary);
+  }
+  .btn-sm { @apply px-3 py-1.5 text-xs; }
+  .btn-lg { @apply px-6 py-3 text-base; }
+
+  /* --- CARD --- */
+  .card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    @apply rounded-xl;
+  }
+  .card-hover {
+    @apply card transition-shadow duration-200;
+  }
+  .card-hover:hover {
+    @apply shadow-md;
+  }
+
+  /* --- FORM ELEMENTS --- */
+  .input {
+    @apply block w-full px-3 py-2 text-sm rounded-lg transition-colors duration-150;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+  }
+  .input::placeholder {
+    color: var(--color-text-muted);
+  }
+  .input:focus {
+    outline: none;
+    border-color: var(--color-brand-light);
+    box-shadow: 0 0 0 3px rgba(59, 86, 245, 0.12);
+  }
+  .input-error {
+    border-color: #dc2626 !important;
+  }
+  .label {
+    @apply block text-sm font-medium mb-1.5;
+    color: var(--color-text-primary);
+  }
+
+  /* --- BADGE / STATUS --- */
+  .badge {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+  .badge-approved   { background-color: var(--color-approved-bg);    color: var(--color-approved); }
+  .badge-pending    { background-color: var(--color-pending-bg);     color: var(--color-pending); }
+  .badge-rejected   { background-color: var(--color-rejected-bg);    color: var(--color-rejected); }
+  .badge-checked-in { background-color: var(--color-checked-in-bg);  color: var(--color-checked-in); }
+  .badge-checked-out{ background-color: var(--color-checked-out-bg); color: var(--color-checked-out); }
+  .badge-pre-approved{ background-color: var(--color-pre-approved-bg); color: var(--color-pre-approved); }
+  .badge-expired    { background-color: var(--color-expired-bg);     color: var(--color-expired); }
+
+  /* --- TABLE --- */
+  .table-container {
+    @apply w-full overflow-x-auto;
+  }
+  .table {
+    @apply w-full text-sm;
+    border-collapse: collapse;
+  }
+  .table th {
+    @apply px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-surface-2);
+  }
+  .table td {
+    @apply px-4 py-3;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+  }
+  .table tr:hover td {
+    background-color: var(--color-surface-2);
+  }
+  .table tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* --- AVATAR --- */
+  .avatar {
+    @apply flex-shrink-0 rounded-full overflow-hidden flex items-center justify-center font-semibold text-white;
+    background: linear-gradient(135deg, var(--color-brand), var(--color-brand-light));
+  }
+  .avatar-sm  { @apply w-7 h-7 text-xs; }
+  .avatar-md  { @apply w-9 h-9 text-sm; }
+  .avatar-lg  { @apply w-12 h-12 text-base; }
+  .avatar-xl  { @apply w-16 h-16 text-xl; }
+  .avatar-2xl { @apply w-24 h-24 text-2xl; }
+
+  /* --- SIDEBAR --- */
+  .sidebar-link {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 cursor-pointer;
+    color: var(--color-text-secondary);
+  }
+  .sidebar-link:hover {
+    background-color: var(--color-surface-2);
+    color: var(--color-text-primary);
+  }
+  .sidebar-link.active {
+    background-color: var(--color-brand);
+    color: white;
+  }
+
+  /* --- SKELETON --- */
+  .skeleton {
+    @apply rounded animate-pulse;
+    background-color: var(--color-surface-2);
+  }
+
+  /* --- PAGE --- */
+  .page-container {
+    @apply p-6 animate-fade-in;
+  }
+  .page-title {
+    @apply text-2xl font-bold tracking-tight;
+    color: var(--color-text-primary);
+  }
+  .page-subtitle {
+    @apply text-sm mt-1;
+    color: var(--color-text-secondary);
+  }
+
+  /* --- DIVIDER --- */
+  .divider {
+    border-top: 1px solid var(--color-border);
+  }
+
+  /* --- STAT CARD --- */
+  .stat-card {
+    @apply card p-5;
+  }
+
+  /* --- MODAL OVERLAY --- */
+  .modal-overlay {
+    @apply fixed inset-0 z-50 flex items-center justify-center p-4;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+  }
+  .modal-content {
+    @apply card w-full max-w-md animate-slide-up;
+  }
+
+  /* --- DRAWER --- */
+  .drawer-overlay {
+    @apply fixed inset-0 z-40;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  .drawer-panel {
+    @apply fixed right-0 top-0 h-full z-50 shadow-2xl animate-slide-in-right overflow-y-auto;
+    background-color: var(--color-surface);
+    width: min(480px, 100vw);
+  }
+
+  /* Print styles */
+  @media print {
+    .no-print { display: none !important; }
+    .print-only { display: block !important; }
+  }
+}
+
+/* Prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
